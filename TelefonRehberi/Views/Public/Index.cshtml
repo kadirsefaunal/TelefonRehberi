@@ -23,9 +23,74 @@
                 <td>@calisan.CalisanAd</td>
                 <td>@calisan.CalisanSoyad</td>
                 <td>@calisan.Telefon</td>
-                <td><button type="button" class="btn btn-default">Detay</button></td>
+                <td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#detay" onclick="DetayGoster(@calisan.ID);">Detay</button></td>
             </tr>
         }
     </tbody>
 </table>
 
+<!-- Detay Modal -->
+<div class="modal fade" id="detay" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Çalışan Detay</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="ad" class="col-sm-2 control-label">Ad: </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="ad" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="soyad" class="col-sm-2 control-label">Soyad: </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="soyad" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefon" class="col-sm-2 control-label">Telefon: </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="telefon" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="departman" class="col-sm-2 control-label">Departman: </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="departman" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="yonetici" class="col-sm-2 control-label">Yönetici: </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="yonetici" readonly>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Detay Modal Bitiş-->
+
+<script>
+    function DetayGoster(calisanID) {
+        var veri = {
+            calisanID: calisanID
+        };
+        console.log(calisanID);
+        $.post("/Public/CalisanDetay", veri, function (cevap) {
+            console.log(cevap);
+            $("#ad").val(cevap.CalisanAd);
+            $("#soyad").val(cevap.CalisanSoyad);
+            $("#telefon").val(cevap.Telefon);
+            $("#departman").val(cevap.Departman);
+            $("#yonetici").val(cevap.Yonetici);
+        });
+    }
+</script>

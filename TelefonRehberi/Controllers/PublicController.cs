@@ -20,6 +20,24 @@ namespace TelefonRehberi.Controllers
             return View(vm);
         }
 
+        public JsonResult CalisanDetay(int calisanID)
+        {
+            var calisan = (from c in db.Calisanlar
+                           where c.ID == calisanID
+                           select c).Single();
+
+            Calisan mapCalisan = new Calisan() {
+                ID = calisan.ID,
+                CalisanAd = calisan.CalisanAd,
+                CalisanSoyad = calisan.CalisanSoyad,
+                Telefon = calisan.Telefon,
+                Departman = (calisan.Departmanlar != null) ? calisan.Departmanlar.DepartmanAdi : "Belirtilmemiş",
+                Yonetici = (calisan.Calisanlar2 != null) ? calisan.Calisanlar2.CalisanAd + " " + calisan.Calisanlar2.CalisanSoyad : "Belirtilmemiş"
+            };
+
+            return Json(mapCalisan);
+        }
+
         public JsonResult GirisYap(string kullaniciAdi, string parola)
         {
             try
