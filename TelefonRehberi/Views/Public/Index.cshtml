@@ -6,7 +6,7 @@
 
 <h2>Public Index</h2>
 
-<table class="table table-hover">
+<table id="ortala" class="table table-hover ">
     <thead>
         <tr>
             <th>#</th>
@@ -18,7 +18,7 @@
     <tbody>
         @foreach (var calisan in Model.calisanlar)
         {
-            <tr>
+            <tr >
                 <td>@calisan.ID</td>
                 <td>@calisan.CalisanAd</td>
                 <td>@calisan.CalisanSoyad</td>

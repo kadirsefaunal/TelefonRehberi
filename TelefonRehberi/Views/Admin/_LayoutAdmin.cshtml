@@ -19,10 +19,100 @@
 
 </head>
 <body>
+    <!--Navbar başlangıç-->
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <!-- Mobil Menü -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/Public/Index">Telefon Rehberi</a>
+            </div>
 
+            <!-- Masaüstü Menü -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/Public/Index">Anasayfa</a></li>
+                    <li><a href="/Public/Index">Çalışanlar</a></li>
+                    <li><a href="/Public/Index">Departmanlar</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" data-toggle="modal" data-target="#SifreDegistirModal">Şifre Değiştir</a></li>
+                            <li><a href="#" onclick="Cikis()">Çıkış</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <!--Navbar bitiş-->
 
-    <div> 
+    <div class="container"> 
         @RenderBody()
     </div>
+
+    <!--Şifre Değiştirme Modal -->
+    <div class="modal fade" id="SifreDegistirModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Şifre Değiştir</h4>
+                </div>
+                <div class="modal-body container">
+                    <div class="col-md-4 col-md-offset-1">
+                        <div class="form-group">
+                            <input id="eskiParola" class="form-control" placeholder="Eski Parola" name="Eski Parola" type="password" value="">
+                        </div>
+                        <div class="form-group">
+                            <input id="yeniParola" class="form-control" placeholder="Yeni Parola" name="Yeni Parola" type="password" value="">
+                        </div>
+                        <div class="form-group">
+                            <input id="yeniParolaTekrar" class="form-control" placeholder="Yeni Parola Tekrar" name="Yeni Parola Tekrar" type="password" value="">
+                        </div>
+                        <button class="btn btn-primary btn-block" onclick="SifreDegistir()">Şifreyi Değiştir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Şifre Değiştirme Modal Sonu-->
+
+    <script>
+        function SifreDegistir() {
+            var kontrol = true;
+            if ($.trim($("#eskiParola").val()) == "" || $.trim($("#yeniParola").val()) == "" || $.trim($("#yeniParolaTekrar").val()) == "") {
+                console.log("Boş alan bırakma!");
+                kontrol = false;
+            }
+
+            if (kontrol == true && ($("#yeniParola").val() == $("#yeniParolaTekrar").val())) {
+                var veri = {
+                    eskiParola: $("#eskiParola").val(),
+                    yeniParola: $("#yeniParola").val()
+                };
+                console.log(veri);
+                $.post("/Admin/SifreDegistir", veri, function (cevap) {
+                    console.log(cevap);
+                    window.location.reload(true);
+                });
+            }
+            else {
+                console.log("hata");
+            }
+        }
+
+        function Cikis() {
+            $.post("/Public/CikisYap", function (cevap) {
+                console.log(cevap);
+                window.location = "../../Public/Index";
+            });
+        }
+    </script>
 </body>
 </html>

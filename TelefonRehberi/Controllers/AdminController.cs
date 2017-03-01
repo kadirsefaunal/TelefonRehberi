@@ -16,5 +16,37 @@ namespace TelefonRehberi.Controllers
             
             return View();
         }
+
+        public JsonResult SifreDegistir(string eskiParola, string yeniParola)
+        {
+            try
+            {
+                int kullaniciID = Convert.ToInt32(Request.Cookies["KullaniciKimligi"].Value);
+                var admin = (from a in db.Admin
+                             where a.ID == kullaniciID
+                             select a).Single();
+                if (admin != null)
+                {
+                    if (eskiParola == admin.Parola)
+                    {
+                        admin.Parola = yeniParola;
+                        db.SaveChanges();
+                        return Json("Başarılı.");
+                    }
+                    else
+                    {
+                        return Json("Parola Hatalı!");
+                    }
+                }
+                else
+                {
+                    return Json("Başarısız!");
+                }
+            }
+            catch (Exception)
+            {
+                return Json("Başarısız!");
+            }
+        }
     }
 }
