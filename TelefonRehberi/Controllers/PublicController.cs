@@ -18,5 +18,38 @@ namespace TelefonRehberi.Controllers
         {
             return View();
         }
+
+        public JsonResult GirisYap(string kullaniciAdi, string parola)
+        {
+            try
+            {
+                int kullaniciKimligi = (from k in db.Admin
+                                        where k.KullaniciAdi == kullaniciAdi && k.Parola == parola
+                                        select k.ID).SingleOrDefault();
+
+                if (kullaniciKimligi != 0)
+                {
+                    Response.Cookies["KullaniciKimligi"].Value = kullaniciKimligi.ToString();
+                    Response.Cookies["KullaniciKimligi"].Expires = DateTime.Now.AddDays(1);
+                    Session["KullaniciID"] = Convert.ToInt32(Response.Cookies["KullaniciKimligi"].Value);
+
+                    Session["KullaniciID"] = kullaniciKimligi;
+
+                    HttpCookie sonZiyaret = new HttpCookie("SonZiyaret", DateTime.Now.ToString());
+                    sonZiyaret.Expires = DateTime.Now.AddDays(1);
+                    Response.Cookies.Add(sonZiyaret);
+
+                    return Json("Giriş başarılı.");
+                }
+                else
+                {
+                    return Json("Giriş başarısız.");
+                }
+            }
+            catch
+            {
+                return Json("Giriş başarısız.");
+            }
+        }
     }
 }
