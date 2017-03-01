@@ -16,7 +16,8 @@ namespace TelefonRehberi.Controllers
         // GET: Public
         public ActionResult Index()
         {
-            return View();
+            vm.calisanlar = db.Calisanlar.ToList();
+            return View(vm);
         }
 
         public JsonResult GirisYap(string kullaniciAdi, string parola)

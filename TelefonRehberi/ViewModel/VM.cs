@@ -9,5 +9,7 @@ namespace TelefonRehberi.ViewModel
     public class VM
     {
         public Admin admin { get; set; }
+
+        public List<Calisanlar> calisanlar { get; set; }
     }
 }
