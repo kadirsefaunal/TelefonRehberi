@@ -150,9 +150,74 @@ namespace TelefonRehberi.Controllers
         {
             try
             {
-                //Aynı departman varsa tekrar ekleme!
-                db.Departmanlar.Add(departman);
+                departman.DepartmanAdi = departman.DepartmanAdi.ToUpper();
+                var departmanKontrol = (from d in db.Departmanlar
+                                        where d.DepartmanAdi == departman.DepartmanAdi
+                                        select d).SingleOrDefault();
+
+                if (departmanKontrol == null)
+                {
+                    db.Departmanlar.Add(departman);
+                    db.SaveChanges();
+                    return Json("+");
+                }
+                else
+                {
+                    return Json("Eklemeye çalıştığınız departman zaten mevcut!");
+                }
+            }
+            catch (Exception)
+            {
+                return Json("-");
+            }
+        }
+
+        public ActionResult DepartmanSil(int departmanID)
+        {
+            var departman = (from d in db.Departmanlar
+                             where d.ID == departmanID
+                             select d).SingleOrDefault();
+            return View(departman);
+        }
+
+        public JsonResult DepartmanSill(int departmanID)
+        {
+            try
+            {
+                var departman = (from d in db.Departmanlar
+                                 where d.ID == departmanID
+                                 select d).SingleOrDefault();
+
+                db.Departmanlar.Remove(departman);
                 db.SaveChanges();
+                return Json("+");
+            }
+            catch (Exception)
+            {
+                return Json("-");
+            }
+        }
+
+        public ActionResult DepartmanDuzenle(int departmanID)
+        {
+            var departman = (from d in db.Departmanlar
+                             where d.ID == departmanID
+                             select d).SingleOrDefault();
+            return View(departman);
+        }
+
+        public JsonResult DepartmanDuzenlee(Departmanlar departman)
+        {
+            try
+            {
+                var guncellenecekDepartman = (from d in db.Departmanlar
+                                              where d.ID == departman.ID
+                                              select d).SingleOrDefault();
+
+                guncellenecekDepartman.DepartmanAdi = departman.DepartmanAdi.ToUpper();
+                guncellenecekDepartman.Aciklama = departman.Aciklama;
+                db.SaveChanges();
+
                 return Json("+");
             }
             catch (Exception)

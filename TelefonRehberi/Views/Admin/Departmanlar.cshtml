@@ -22,7 +22,7 @@
                 <td>@departman.ID</td>
                 <td>@departman.DepartmanAdi</td>
                 <td>@departman.Aciklama</td>
-                <td>@Html.ActionLink("Düzenle", "CalisanDuzenle", "Admin", new { departmanID = departman.ID }, new { @class = "btn btn-default" }) @Html.ActionLink("Sil", "CalisanSil", "Admin", new { departmanID = departman.ID }, new { @class = "btn btn-default" })</td>
+                <td>@Html.ActionLink("Düzenle", "DepartmanDuzenle", "Admin", new { departmanID = departman.ID }, new { @class = "btn btn-default" }) @Html.ActionLink("Sil", "DepartmanSil", "Admin", new { departmanID = departman.ID }, new { @class = "btn btn-default" })</td>
             </tr>
         }
     </tbody>
