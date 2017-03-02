@@ -20,3 +20,30 @@
         </div>
     </div>
 </form>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-9">
+        <button class="btn btn-default pull-right" onclick="DepartmanEkle();">Kaydet</button>
+    </div>
+</div>
+
+<script>
+    function DepartmanEkle() {
+        var kontrol = true;
+        if ($.trim($("#departmanAdi").val()) == "") {
+            console.log("Zorunlu alanı boş geçmeyin!");
+            kontrol = false;
+        }
+
+        if (kontrol == true) {
+            var departman = {
+                DepartmanAdi: $("#departmanAdi").val(),
+                Aciklama: $("#aciklama").val()
+            };
+            console.log(departman);
+            $.post("/Admin/DepartmanEklee", { departman: departman }, function (cevap) {
+                console.log(cevap);
+            });
+        }
+    }
+</script>

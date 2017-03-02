@@ -146,6 +146,21 @@ namespace TelefonRehberi.Controllers
             return View();
         }
 
+        public JsonResult DepartmanEklee(Departmanlar departman)
+        {
+            try
+            {
+                //Aynı departman varsa tekrar ekleme!
+                db.Departmanlar.Add(departman);
+                db.SaveChanges();
+                return Json("+");
+            }
+            catch (Exception)
+            {
+                return Json("-");
+            }
+        }
+
         public JsonResult SifreDegistir(string eskiParola, string yeniParola)
         {
             try
