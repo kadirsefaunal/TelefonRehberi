@@ -86,8 +86,16 @@ namespace TelefonRehberi.Controllers
                 var calisan = (from c in db.Calisanlar
                                where c.ID == calisanID
                                select c).Single();
-                db.Calisanlar.Remove(calisan);
-                db.SaveChanges();
+
+                if (calisan.Calisanlar1.Count() == 0)
+                {
+                    db.Calisanlar.Remove(calisan);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    return Json("Bu çalışan yönetici konumunda");
+                }
                 return Json("+");
             }
             catch (Exception)

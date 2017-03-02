@@ -50,12 +50,7 @@
             calisanID: id
         };
         $.post("/Admin/CalisanSill", veri, function (cevap) {
-            if (cevap == "+") {
-                window.location = "../../Admin/Index";
-            }
-            else {
-                console.log("Hata");
-            }
+            console.log(cevap);
         });
     }
 </script>
