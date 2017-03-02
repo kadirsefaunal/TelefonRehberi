@@ -1,0 +1,29 @@
+﻿@model TelefonRehberi.ViewModel.VM
+@{
+    ViewBag.Title = "Departmanlar";
+    Layout = "~/Views/Admin/_LayoutAdmin.cshtml";
+}
+
+<h2>Departmanlar</h2>
+
+@Html.ActionLink("Departman Ekle", "DepartmanEkle", "Admin", new { @class = "btn btn-primary" })
+<table id="ortala" class="table table-hover ">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Departman Adı</th>
+            <th>Açıklama</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var departman in Model.departmanlar)
+        {
+            <tr>
+                <td>@departman.ID</td>
+                <td>@departman.DepartmanAdi</td>
+                <td>@departman.Aciklama</td>
+                <td>@Html.ActionLink("Düzenle", "CalisanDuzenle", "Admin", new { departmanID = departman.ID }, new { @class = "btn btn-default" }) @Html.ActionLink("Sil", "CalisanSil", "Admin", new { departmanID = departman.ID }, new { @class = "btn btn-default" })</td>
+            </tr>
+        }
+    </tbody>
+</table>

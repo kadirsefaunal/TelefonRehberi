@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "DepartmanEkle";
+    Layout = "~/Views/Admin/_LayoutAdmin.cshtml";
+}
+
+<h2>DepartmanEkle</h2>
+
+<form class="form-horizontal">
+    <div class="form-group">
+        <label for="calisanAd" class="col-sm-2 control-label">*Çalışan Adı: </label>
+        <div class="col-sm-9">
+            <input id="departmanAdi" type="text" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="calisanSoyad" class="col-sm-2 control-label">*Çalışan Soyadı: </label>
+        <div class="col-sm-9">
+            <textarea id="aciklama" class="form-control" rows="3"></textarea>
+        </div>
+    </div>
+</form>

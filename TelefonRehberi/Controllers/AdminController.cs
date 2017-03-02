@@ -22,9 +22,7 @@ namespace TelefonRehberi.Controllers
             }
             return RedirectToAction("Index", "Public");
         }
-
         
-
         public ActionResult CalisanEkle()
         {
             if (Request.Cookies["KullaniciKimligi"] != null)
@@ -134,6 +132,18 @@ namespace TelefonRehberi.Controllers
             {
                 return Json("-");
             }
+        }
+
+        public ActionResult Departmanlar()
+        {
+            vm.departmanlar = db.Departmanlar.ToList();
+            return View(vm);
+        }
+
+        public ActionResult DepartmanEkle()
+        {
+
+            return View();
         }
 
         public JsonResult SifreDegistir(string eskiParola, string yeniParola)
