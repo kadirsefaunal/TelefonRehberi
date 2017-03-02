@@ -14,6 +14,8 @@ namespace TelefonRehberi.ViewModel
 
         public Calisanlar calisan { get; set; }
 
+        public Calisan mapCalisan { get; set; }
+
         public List<Departmanlar> departmanlar { get; set; }
     }
 }

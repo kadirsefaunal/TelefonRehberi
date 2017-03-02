@@ -23,17 +23,7 @@ namespace TelefonRehberi.Controllers
             return RedirectToAction("Index", "Public");
         }
 
-        //public ActionResult CalisanDuzenle(int calisanID)
-        //{
-        //    if (Request.Cookies["KullaniciKimligi"] != null)
-        //    {
-        //        vm.calisan = (from c in db.Calisanlar
-        //                      where c.ID == calisanID
-        //                      select c).SingleOrDefault();
-        //        return View(vm);
-        //    }
-        //    return RedirectToAction("Index", "Public");
-        //}
+        
 
         public ActionResult CalisanEkle()
         {
@@ -96,6 +86,48 @@ namespace TelefonRehberi.Controllers
                 {
                     return Json("Bu çalışan yönetici konumunda");
                 }
+                return Json("+");
+            }
+            catch (Exception)
+            {
+                return Json("-");
+            }
+        }
+
+        public ActionResult CalisanDuzenle(int calisanID)
+        {
+            vm.calisanlar = db.Calisanlar.ToList();
+            vm.departmanlar = db.Departmanlar.ToList();
+            vm.calisan = (from c in db.Calisanlar
+                          where c.ID == calisanID
+                          select c).Single();
+            vm.mapCalisan = new Calisan()
+            {
+                ID = vm.calisan.ID,
+                CalisanAd = vm.calisan.CalisanAd,
+                CalisanSoyad = vm.calisan.CalisanSoyad,
+                Telefon = vm.calisan.Telefon,
+                Departman = (vm.calisan.Departmanlar != null) ? vm.calisan.Departmanlar.DepartmanAdi : "Belirtilmemiş",
+                Yonetici = (vm.calisan.Calisanlar2 != null) ? vm.calisan.Calisanlar2.CalisanAd + " " + vm.calisan.Calisanlar2.CalisanSoyad : "Belirtilmemiş"
+            };
+
+            return View(vm);
+        }
+        
+        public JsonResult CalisanDuzenlee(Calisanlar calisan)
+        {
+            try
+            {
+                var calisanEski = (from c in db.Calisanlar
+                                   where c.ID == calisan.ID
+                                   select c).Single();
+                calisanEski.CalisanAd = calisan.CalisanAd;
+                calisanEski.CalisanSoyad = calisan.CalisanSoyad;
+                calisanEski.Telefon = calisan.Telefon;
+                calisanEski.DepartmanID = calisan.DepartmanID;
+                calisanEski.YoneticiID = calisan.YoneticiID;
+                db.SaveChanges();
+
                 return Json("+");
             }
             catch (Exception)

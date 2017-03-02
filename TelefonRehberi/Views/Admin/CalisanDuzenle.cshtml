@@ -1,0 +1,97 @@
+﻿@model TelefonRehberi.ViewModel.VM
+@{
+    ViewBag.Title = "CalisanDuzenle";
+    Layout = "~/Views/Admin/_LayoutAdmin.cshtml";
+}
+
+<h2>CalisanDuzenle</h2>
+
+<form class="form-horizontal">
+    <div class="form-group">
+        <label for="ad" class="col-sm-2 control-label">Ad: </label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="ad" value="@Model.mapCalisan.CalisanAd">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="soyad" class="col-sm-2 control-label">Soyad: </label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="soyad" value="@Model.mapCalisan.CalisanSoyad">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="telefon" class="col-sm-2 control-label">Telefon: </label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="telefon" value="@Model.mapCalisan.Telefon">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="departman" class="col-sm-2 control-label">Departman: </label>
+        <div class="col-sm-9">
+            <select id="departman" class="form-control">
+                <option>seçiniz</option>
+                @foreach (var departman in Model.departmanlar)
+                {
+                    if (departman.ID == Model.calisan.DepartmanID)
+                    {
+                        <option selected value="@departman.ID">@departman.DepartmanAdi</option>
+                    }
+                    else
+                    {
+                        <option value="@departman.ID">@departman.DepartmanAdi</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="yonetici" class="col-sm-2 control-label">Yönetici: </label>
+        <div class="col-sm-9">
+            <select id="yonetici" class="form-control">
+                <option>seçiniz</option>
+                @foreach (var yonetici in Model.calisanlar)
+                {
+                    string adSoyad = yonetici.CalisanAd + " " + yonetici.CalisanSoyad;
+                    if (yonetici.ID == Model.calisan.YoneticiID)
+                    {
+                        <option selected value="@yonetici.ID">@adSoyad</option>
+                    }
+                    else
+                    {
+                        <option value="@yonetici.ID">@adSoyad</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+</form>
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-9">
+        <button class="btn btn-default pull-right" onclick="CalisanGuncelle(@Model.calisan.ID);">Düzenlemeyi Kaydet</button>
+    </div>
+</div>
+
+<script>
+    function CalisanGuncelle(id) {
+        var kontrol = true;
+        if ($.trim($("#ad").val()) == "" || $.trim($("#soyad").val()) == "" || $.trim($("#telefon").val()) == "") {
+            console.log("Boş alan bırakma!");
+            kontrol = false;
+        }
+
+        if (kontrol == true) {
+            var calisan = {
+                ID: id,
+                CalisanAd: $("#ad").val(),
+                CalisanSoyad: $("#soyad").val(),
+                Telefon: $("#telefon").val(),
+                DepartmanID: $('#departman').val(),
+                YoneticiID: $("#yonetici").val()
+            };
+            console.log(calisan);
+            $.post("/Admin/CalisanDuzenlee", { calisan: calisan }, function (cevap) {
+                console.log(cevap);
+            });
+        }
+    }
+</script>
