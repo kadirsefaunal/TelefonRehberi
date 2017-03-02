@@ -28,5 +28,7 @@ namespace TelefonRehberi.Models
         public virtual DbSet<Admin> Admin { get; set; }
         public virtual DbSet<Calisanlar> Calisanlar { get; set; }
         public virtual DbSet<Departmanlar> Departmanlar { get; set; }
+
+        public System.Data.Entity.DbSet<TelefonRehberi.ViewModel.Calisan> Calisans { get; set; }
     }
 }

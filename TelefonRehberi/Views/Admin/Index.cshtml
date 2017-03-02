@@ -24,6 +24,7 @@
                 <td>@calisan.CalisanSoyad</td>
                 <td>@calisan.Telefon</td>
                 <td>@Html.ActionLink("Düzenle", "CalisanDuzenle", "Admin", new { calisanID = calisan.ID }, new { @class = "btn btn-default" })</td>
+                <td>@Html.ActionLink("Sil", "CalisanSil", "Admin", new { calisanID = calisan.ID }, new { @class = "btn btn-default" })</td>
             </tr>
         }
     </tbody>

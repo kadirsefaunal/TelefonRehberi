@@ -163,6 +163,7 @@
       <DependentUpon>TelefonRehberiModel.edmx</DependentUpon>
     </Content>
     <Content Include="Views\Admin\CalisanEkle.cshtml" />
+    <Content Include="Views\Admin\CalisanSil.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

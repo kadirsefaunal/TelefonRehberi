@@ -1,0 +1,63 @@
+﻿@model TelefonRehberi.ViewModel.Calisan
+@{
+    ViewBag.Title = "CalisanSil";
+    Layout = "~/Views/Admin/_LayoutAdmin.cshtml";
+}
+
+<h2>CalisanSil</h2>
+<h4>Aşağıda bilgileri verilen çalışanı silmek istediğinizden emin misiniz?</h4>
+<form class="form-horizontal">
+    <div class="form-group">
+        <label for="ad" class="col-sm-2 control-label">Ad: </label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="ad" value="@Model.CalisanAd" readonly>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="soyad" class="col-sm-2 control-label">Soyad: </label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="soyad" value="@Model.CalisanSoyad" readonly>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="telefon" class="col-sm-2 control-label">Telefon: </label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="telefon" value="@Model.Telefon" readonly>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="departman" class="col-sm-2 control-label">Departman: </label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="departman" value="@Model.Departman" readonly>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="yonetici" class="col-sm-2 control-label">Yönetici: </label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="yonetici" value="@Model.Yonetici" readonly>
+        </div>
+    </div>
+</form>
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-9">
+        <button class="btn btn-default pull-right" onclick="CalisanSil(@Model.ID);">Sil</button>
+    </div>
+</div>
+
+<script>
+    function CalisanSil(id) {
+        var veri = {
+            calisanID: id
+        };
+        $.post("/Admin/CalisanSill", veri, function (cevap) {
+            if (cevap == "+") {
+                window.location = "../../Admin/Index";
+            }
+            else {
+                console.log("Hata");
+            }
+        });
+    }
+</script>
+
+

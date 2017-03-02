@@ -60,6 +60,42 @@ namespace TelefonRehberi.Controllers
             }
         }
 
+        public ActionResult CalisanSil(int calisanID)
+        {
+            var calisan = (from c in db.Calisanlar
+                           where c.ID == calisanID
+                           select c).Single();
+
+            Calisan mapCalisan = new Calisan()
+            {
+                ID = calisan.ID,
+                CalisanAd = calisan.CalisanAd,
+                CalisanSoyad = calisan.CalisanSoyad,
+                Telefon = calisan.Telefon,
+                Departman = (calisan.Departmanlar != null) ? calisan.Departmanlar.DepartmanAdi : "Belirtilmemiş",
+                Yonetici = (calisan.Calisanlar2 != null) ? calisan.Calisanlar2.CalisanAd + " " + calisan.Calisanlar2.CalisanSoyad : "Belirtilmemiş"
+            };
+
+            return View(mapCalisan);
+        }
+
+        public JsonResult CalisanSill(int calisanID)
+        {
+            try
+            {
+                var calisan = (from c in db.Calisanlar
+                               where c.ID == calisanID
+                               select c).Single();
+                db.Calisanlar.Remove(calisan);
+                db.SaveChanges();
+                return Json("+");
+            }
+            catch (Exception)
+            {
+                return Json("-");
+            }
+        }
+
         public JsonResult SifreDegistir(string eskiParola, string yeniParola)
         {
             try
