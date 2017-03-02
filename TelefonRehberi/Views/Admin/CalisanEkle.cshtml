@@ -1,0 +1,86 @@
+﻿@model TelefonRehberi.ViewModel.VM
+@{
+    ViewBag.Title = "CalisanEkle";
+    Layout = "~/Views/Admin/_LayoutAdmin.cshtml";
+}
+
+<h2>CalisanEkle</h2>
+
+<form class="form-horizontal">
+    <div class="form-group">
+        <label for="calisanAd" class="col-sm-2 control-label">*Çalışan Adı: </label>
+        <div class="col-sm-9">
+            <input id="calisanAd" type="text" class="form-control" placeholder="Text input">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="calisanSoyad" class="col-sm-2 control-label">*Çalışan Soyadı: </label>
+        <div class="col-sm-9">
+            <input id="calisanSoyad" type="text" class="form-control" placeholder="Text input">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="numara" class="col-sm-2 control-label">*Telefon: </label>
+        <div class="col-sm-9">
+            <input id="numara" type="text" class="form-control" placeholder="Text input">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Departman: </label>
+        <div class="col-sm-9">
+            <select id="departman" class="form-control">
+                <option>seçiniz</option>
+                @foreach (var departman in Model.departmanlar)
+                {
+                    <option value="@departman.ID">@departman.DepartmanAdi</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Yönetici: </label>
+        <div class="col-sm-9">
+            <select id="yonetici" class="form-control">
+                <option>seçiniz</option>
+                @foreach (var calisan in Model.calisanlar)
+                {
+                    string adSoyad = calisan.CalisanAd + " " + calisan.CalisanSoyad;
+                    <option value="@calisan.ID">@adSoyad</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    
+</form>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-9">
+        <button class="btn btn-default pull-right" onclick="CalisanKaydet();">Kaydet</button>
+    </div>
+</div>
+
+<script>
+    function CalisanKaydet()
+    {
+        var kontrol = true;
+        if ($.trim($("#calisanAd").val()) == "" || $.trim($("#calisanSoyad").val()) == "" || $.trim($("#numara").val()) == "") {
+            console.log("Boş alan bırakma!");
+            kontrol = false;
+        }
+
+        if (kontrol == true) {
+            var calisan = {
+                CalisanAd: $("#calisanAd").val(),
+                CalisanSoyad: $("#calisanSoyad").val(),
+                Telefon: $("#numara").val(),
+                DepartmanID: $('#departman').val(),
+                YoneticiID: $("#yonetici").val()
+            };
+            console.log(calisan);
+            $.post("/Admin/CEkle", { calisan: calisan }, function (cevap) {
+                console.log(cevap);
+            });
+        }
+    }
+</script>

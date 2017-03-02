@@ -1,7 +1,30 @@
-﻿
+﻿@model TelefonRehberi.ViewModel.VM
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Admin/_LayoutAdmin.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Admin Index</h2>
+@Html.ActionLink("Çalışan Ekle", "CalisanEkle", "Admin", new { @class = "btn btn-primary" })
+<table id="ortala" class="table table-hover ">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Telefon</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var calisan in Model.calisanlar)
+        {
+            <tr>
+                <td>@calisan.ID</td>
+                <td>@calisan.CalisanAd</td>
+                <td>@calisan.CalisanSoyad</td>
+                <td>@calisan.Telefon</td>
+                <td>@Html.ActionLink("Düzenle", "CalisanDuzenle", "Admin", new { calisanID = calisan.ID }, new { @class = "btn btn-default" })</td>
+            </tr>
+        }
+    </tbody>
+</table>

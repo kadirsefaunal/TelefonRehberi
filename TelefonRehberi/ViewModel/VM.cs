@@ -11,5 +11,9 @@ namespace TelefonRehberi.ViewModel
         public Admin admin { get; set; }
 
         public List<Calisanlar> calisanlar { get; set; }
+
+        public Calisanlar calisan { get; set; }
+
+        public List<Departmanlar> departmanlar { get; set; }
     }
 }

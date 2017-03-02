@@ -11,7 +11,8 @@ namespace TelefonRehberi.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Calisanlar
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,7 +20,8 @@ namespace TelefonRehberi.Models
         {
             this.Calisanlar1 = new HashSet<Calisanlar>();
         }
-    
+
+        
         public int ID { get; set; }
         public string CalisanAd { get; set; }
         public string CalisanSoyad { get; set; }

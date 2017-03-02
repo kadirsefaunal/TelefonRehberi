@@ -162,6 +162,7 @@
     <Content Include="Models\TelefonRehberiModel.edmx.diagram">
       <DependentUpon>TelefonRehberiModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Views\Admin\CalisanEkle.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
