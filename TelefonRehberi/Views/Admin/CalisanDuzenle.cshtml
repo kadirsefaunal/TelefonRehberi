@@ -5,8 +5,11 @@
 }
 
 <h2>CalisanDuzenle</h2>
+<br /><br />
+
 
 <form class="form-horizontal">
+    <div id="hata" class="alert alert-danger collapse col-sm-12" role="alert"></div>
     <div class="form-group">
         <label for="ad" class="col-sm-2 control-label">Ad: </label>
         <div class="col-sm-9">
@@ -75,7 +78,7 @@
     function CalisanGuncelle(id) {
         var kontrol = true;
         if ($.trim($("#ad").val()) == "" || $.trim($("#soyad").val()) == "" || $.trim($("#telefon").val()) == "") {
-            console.log("Boş alan bırakma!");
+            $("#hata").html("<p>Boş alan bırakma!</p>").show();
             kontrol = false;
         }
 
@@ -90,8 +93,12 @@
             };
             console.log(calisan);
             $.post("/Admin/CalisanDuzenlee", { calisan: calisan }, function (cevap) {
-                console.log(cevap);
+                $("#hata").html("<p>Boş alan bırakma!</p>").show();
             });
         }
     }
+
+    $(document).ready(function () {
+        $("#telefon").mask("(000) 000-0000");
+    });
 </script>

@@ -76,7 +76,7 @@
                 </div>
                 <div class="modal-body container">
                     <div class="col-sm-8 col-sm-offset-1 col-md-4 col-md-offset-1">
-                        <div id="hata" class="alert alert-danger collapse" role="alert">Giriş başarısız!</div>
+                        <div id="hata" class="alert alert-danger collapse" role="alert"></div>
                         <div class="form-group">
                             <input id="kullaniciAdi" class="form-control" placeholder="Kullanıcı Adı" name="Kullanıcı Adı" type="text">
                         </div>
@@ -96,7 +96,7 @@
         function Giris() {
             var kontrol = true;
             if ($.trim($("#kullaniciAdi").val()) == "" || $.trim($("#parola").val()) == "") {
-                console.log("Boş alan bırakma!");
+                $("#hata").html("<p>Boş alan bırakma!</p>").show();
                 kontrol = false;
             }
 
@@ -111,7 +111,7 @@
                         window.location = "../../Admin/Index";
                     }
                     else {
-                        $("#hata").show();
+                        $("#hata").html("<p>Giriş başarısız!</p>").show();
                     }
                 });
             }

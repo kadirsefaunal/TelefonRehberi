@@ -15,6 +15,7 @@
     <!--JS başlangıç-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.min.js"></script>
     <!--JS bitiş-->
 
 </head>
@@ -36,9 +37,9 @@
             <!-- Masaüstü Menü -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/Public/Index">Anasayfa</a></li>
-                    <li><a href="/Public/Index">Çalışanlar</a></li>
-                    <li><a href="/Public/Index">Departmanlar</a></li>
+                    <li><a href="/Admin/Index">Anasayfa</a></li>
+                    <li><a href="/Admin/Index">Çalışanlar</a></li>
+                    <li><a href="/Admin/Departmanlar">Departmanlar</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -66,6 +67,7 @@
                 </div>
                 <div class="modal-body container">
                     <div class="col-md-4 col-md-offset-1">
+                        <div id="hata" class="alert alert-danger collapse" role="alert"></div>
                         <div class="form-group">
                             <input id="eskiParola" class="form-control" placeholder="Eski Parola" name="Eski Parola" type="password" value="">
                         </div>
@@ -87,7 +89,7 @@
         function SifreDegistir() {
             var kontrol = true;
             if ($.trim($("#eskiParola").val()) == "" || $.trim($("#yeniParola").val()) == "" || $.trim($("#yeniParolaTekrar").val()) == "") {
-                console.log("Boş alan bırakma!");
+                $("#hata").html("<p>Boş alan bırakma!</p>").show();
                 kontrol = false;
             }
 
@@ -98,18 +100,17 @@
                 };
                 console.log(veri);
                 $.post("/Admin/SifreDegistir", veri, function (cevap) {
-                    console.log(cevap);
+                    $("#hata").html("<p>" + cevap + "</p>").show();
                     window.location.reload(true);
                 });
             }
             else {
-                console.log("hata");
+                $("#hata").html("<p>Parolalar uyuşmuyor!</p>").show();
             }
         }
 
         function Cikis() {
             $.post("/Public/CikisYap", function (cevap) {
-                console.log(cevap);
                 window.location = "../../Public/Index";
             });
         }
