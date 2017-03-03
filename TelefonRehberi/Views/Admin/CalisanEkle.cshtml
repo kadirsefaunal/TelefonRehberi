@@ -67,7 +67,7 @@
     {
         var kontrol = true;
         if ($.trim($("#calisanAd").val()) == "" || $.trim($("#calisanSoyad").val()) == "" || $.trim($("#numara").val()) == "") {
-            $("#hata").html("<p>Boş alan bırakma!</p>").show();
+            $("#hata").html("<p>Zorunlu alanları boş bırakma!</p>").show();
             kontrol = false;
         }
 
@@ -81,7 +81,12 @@
             };
 
             $.post("/Admin/CEkle", { calisan: calisan }, function (cevap) {
-                window.location = "../../Admin/Index";
+                if (cevap == "Çalışan ekleme başarılı.") {
+                    window.location = "../../Admin/Index";
+                }
+                else {
+                    $("#hata").html("<p>" + cevap + "</p>").show();
+                }
             });
         }
     }

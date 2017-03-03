@@ -89,7 +89,7 @@
         function SifreDegistir() {
             var kontrol = true;
             if ($.trim($("#eskiParola").val()) == "" || $.trim($("#yeniParola").val()) == "" || $.trim($("#yeniParolaTekrar").val()) == "") {
-                $("#hata").html("<p>Boş alan bırakma!</p>").show();
+                $("#hata").html("<p>Zorunlu alanları boş bırakma!</p>").show();
                 kontrol = false;
             }
 
@@ -100,8 +100,12 @@
                 };
                 console.log(veri);
                 $.post("/Admin/SifreDegistir", veri, function (cevap) {
-                    $("#hata").html("<p>" + cevap + "</p>").show();
-                    window.location.reload(true);
+                    if (cevap == "Başarılı.") {
+                        window.location.reload(true);
+                    }
+                    else {
+                        $("#hata").html("<p>" + cevap + "</p>").show();
+                    }
                 });
             }
             else {

@@ -4,9 +4,11 @@
     Layout = "~/Views/Admin/_LayoutAdmin.cshtml";
 }
 
-<h2>DepartmanDuzenle</h2>
+<h2>Departman Düzenle</h2>
+<br /><br />
 
 <form class="form-horizontal">
+    <div id="hata" class="alert alert-danger collapse col-sm-12" role="alert"></div>
     <div class="form-group">
         <label for="departmanAdi" class="col-sm-2 control-label">*Departman Adı: </label>
         <div class="col-sm-9">
@@ -23,7 +25,7 @@
 
 <div class="form-group">
     <div class="col-sm-offset-2 col-sm-9">
-        <button class="btn btn-default pull-right" onclick="DepartmanGuncelle(@Model.ID);">Güncelle</button>
+        <button class="btn btn-default pull-right" onclick="DepartmanGuncelle(@Model.ID);">Güncellemeyi Kaydet</button>
     </div>
 </div>
 
@@ -32,7 +34,7 @@
         var kontrol = true;
         if ($.trim($("#departmanAdi").val()) == "") {
             kontrol = false;
-            console.log("Zorunlu alanlar boş geçilemez!");
+            $("#hata").html("<p>Zorunlu alanları boş bırakma!</p>").show();
         }
 
         if (kontrol == true) {
@@ -41,9 +43,14 @@
                 DepartmanAdi: $("#departmanAdi").val(),
                 Aciklama: $("#aciklama").val()
             };
-            console.log(departman)
+
             $.post("/Admin/DepartmanDuzenlee", { departman: departman }, function (cevap) {
-                console.log(cevap);
+                if (cevap == "Departman güncelleme başarılı.") {
+                    window.location = "../../Admin/Departmanlar";
+                }
+                else {
+                    $("#hata").html("<p>" + cevap + "</p>").show();
+                }
             });
         }
     }
