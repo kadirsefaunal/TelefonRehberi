@@ -120,6 +120,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="IsKatmanlari\IslemCalisan.cs" />
+    <Compile Include="IsKatmanlari\IslemDepartman.cs" />
+    <Compile Include="IsKatmanlari\IslemPublic.cs" />
     <Compile Include="Models\Admin.cs">
       <DependentUpon>TelefonRehberiModel.tt</DependentUpon>
     </Compile>
