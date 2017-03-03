@@ -24,7 +24,7 @@ namespace TelefonRehberi.Controllers
         {
             var calisan = (from c in db.Calisanlar
                            where c.ID == calisanID
-                           select c).Single();
+                           select c).SingleOrDefault();
 
             Calisan mapCalisan = new Calisan() {
                 ID = calisan.ID,

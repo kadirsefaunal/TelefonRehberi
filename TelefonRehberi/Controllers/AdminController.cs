@@ -15,7 +15,7 @@ namespace TelefonRehberi.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            if(Response.Cookies["KullaniciKimligi"] != null)
+            if(Request.Cookies["KullaniciKimligi"] != null)
             {
                 vm.calisanlar = db.Calisanlar.ToList();
                 return View(vm);
@@ -50,21 +50,32 @@ namespace TelefonRehberi.Controllers
 
         public ActionResult CalisanSil(int calisanID)
         {
-            var calisan = (from c in db.Calisanlar
-                           where c.ID == calisanID
-                           select c).Single();
-
-            Calisan mapCalisan = new Calisan()
+            if (Request.Cookies["KullaniciKimligi"] != null)
             {
-                ID = calisan.ID,
-                CalisanAd = calisan.CalisanAd,
-                CalisanSoyad = calisan.CalisanSoyad,
-                Telefon = calisan.Telefon,
-                Departman = (calisan.Departmanlar != null) ? calisan.Departmanlar.DepartmanAdi : "Belirtilmemiş",
-                Yonetici = (calisan.Calisanlar2 != null) ? calisan.Calisanlar2.CalisanAd + " " + calisan.Calisanlar2.CalisanSoyad : "Belirtilmemiş"
-            };
+                var calisan = (from c in db.Calisanlar
+                               where c.ID == calisanID
+                               select c).SingleOrDefault();
 
-            return View(mapCalisan);
+                if (calisan != null)
+                {
+                    Calisan mapCalisan = new Calisan()
+                    {
+                        ID = calisan.ID,
+                        CalisanAd = calisan.CalisanAd,
+                        CalisanSoyad = calisan.CalisanSoyad,
+                        Telefon = calisan.Telefon,
+                        Departman = (calisan.Departmanlar != null) ? calisan.Departmanlar.DepartmanAdi : "Belirtilmemiş",
+                        Yonetici = (calisan.Calisanlar2 != null) ? calisan.Calisanlar2.CalisanAd + " " + calisan.Calisanlar2.CalisanSoyad : "Belirtilmemiş"
+                    };
+
+                    return View(mapCalisan);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+            }
+            return RedirectToAction("Index", "Public");
         }
 
         public JsonResult CalisanSill(int calisanID)
@@ -73,7 +84,7 @@ namespace TelefonRehberi.Controllers
             {
                 var calisan = (from c in db.Calisanlar
                                where c.ID == calisanID
-                               select c).Single();
+                               select c).SingleOrDefault();
 
                 if (calisan.Calisanlar1.Count() == 0)
                 {
@@ -94,22 +105,35 @@ namespace TelefonRehberi.Controllers
 
         public ActionResult CalisanDuzenle(int calisanID)
         {
-            vm.calisanlar = db.Calisanlar.ToList();
-            vm.departmanlar = db.Departmanlar.ToList();
-            vm.calisan = (from c in db.Calisanlar
-                          where c.ID == calisanID
-                          select c).Single();
-            vm.mapCalisan = new Calisan()
+            if (Request.Cookies["KullaniciKimligi"] != null)
             {
-                ID = vm.calisan.ID,
-                CalisanAd = vm.calisan.CalisanAd,
-                CalisanSoyad = vm.calisan.CalisanSoyad,
-                Telefon = vm.calisan.Telefon,
-                Departman = (vm.calisan.Departmanlar != null) ? vm.calisan.Departmanlar.DepartmanAdi : "Belirtilmemiş",
-                Yonetici = (vm.calisan.Calisanlar2 != null) ? vm.calisan.Calisanlar2.CalisanAd + " " + vm.calisan.Calisanlar2.CalisanSoyad : "Belirtilmemiş"
-            };
+                vm.calisan = (from c in db.Calisanlar
+                              where c.ID == calisanID
+                              select c).SingleOrDefault();
 
-            return View(vm);
+                if (vm.calisan != null)
+                {
+                    vm.calisanlar = db.Calisanlar.ToList();
+                    vm.departmanlar = db.Departmanlar.ToList();
+
+                    vm.mapCalisan = new Calisan()
+                    {
+                        ID = vm.calisan.ID,
+                        CalisanAd = vm.calisan.CalisanAd,
+                        CalisanSoyad = vm.calisan.CalisanSoyad,
+                        Telefon = vm.calisan.Telefon,
+                        Departman = (vm.calisan.Departmanlar != null) ? vm.calisan.Departmanlar.DepartmanAdi : "Belirtilmemiş",
+                        Yonetici = (vm.calisan.Calisanlar2 != null) ? vm.calisan.Calisanlar2.CalisanAd + " " + vm.calisan.Calisanlar2.CalisanSoyad : "Belirtilmemiş"
+                    };
+
+                    return View(vm);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+            }
+            return RedirectToAction("Index", "Public");
         }
         
         public JsonResult CalisanDuzenlee(Calisanlar calisan)
@@ -118,7 +142,7 @@ namespace TelefonRehberi.Controllers
             {
                 var calisanEski = (from c in db.Calisanlar
                                    where c.ID == calisan.ID
-                                   select c).Single();
+                                   select c).SingleOrDefault();
                 calisanEski.CalisanAd = calisan.CalisanAd;
                 calisanEski.CalisanSoyad = calisan.CalisanSoyad;
                 calisanEski.Telefon = calisan.Telefon;
@@ -136,14 +160,21 @@ namespace TelefonRehberi.Controllers
 
         public ActionResult Departmanlar()
         {
-            vm.departmanlar = db.Departmanlar.ToList();
-            return View(vm);
+            if (Request.Cookies["KullaniciKimligi"] != null)
+            {
+                vm.departmanlar = db.Departmanlar.ToList();
+                return View(vm);
+            }
+            return RedirectToAction("Index", "Public");
         }
 
         public ActionResult DepartmanEkle()
         {
-
-            return View();
+            if (Request.Cookies["KullaniciKimligi"] != null)
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Public");
         }
 
         public JsonResult DepartmanEklee(Departmanlar departman)
@@ -174,10 +205,22 @@ namespace TelefonRehberi.Controllers
 
         public ActionResult DepartmanSil(int departmanID)
         {
-            var departman = (from d in db.Departmanlar
-                             where d.ID == departmanID
-                             select d).SingleOrDefault();
-            return View(departman);
+            if (Request.Cookies["KullaniciKimligi"] != null)
+            {
+                var departman = (from d in db.Departmanlar
+                                 where d.ID == departmanID
+                                 select d).SingleOrDefault();
+
+                if (departman != null)
+                {
+                    return View(departman);
+                }
+                else
+                {
+                    return RedirectToAction("Departmanlar", "Admin");
+                }
+            }
+            return RedirectToAction("Index", "Public");
         }
 
         public JsonResult DepartmanSill(int departmanID)
@@ -200,10 +243,22 @@ namespace TelefonRehberi.Controllers
 
         public ActionResult DepartmanDuzenle(int departmanID)
         {
-            var departman = (from d in db.Departmanlar
-                             where d.ID == departmanID
-                             select d).SingleOrDefault();
-            return View(departman);
+            if (Request.Cookies["KullaniciKimligi"] != null)
+            {
+                var departman = (from d in db.Departmanlar
+                                 where d.ID == departmanID
+                                 select d).SingleOrDefault();
+
+                if (departman != null)
+                {
+                    return View(departman);
+                }
+                else
+                {
+                    return RedirectToAction("Departmanlar", "Admin");
+                }
+            }
+            return RedirectToAction("Index", "Public");
         }
 
         public JsonResult DepartmanDuzenlee(Departmanlar departman)
@@ -233,7 +288,7 @@ namespace TelefonRehberi.Controllers
                 int kullaniciID = Convert.ToInt32(Request.Cookies["KullaniciKimligi"].Value);
                 var admin = (from a in db.Admin
                              where a.ID == kullaniciID
-                             select a).Single();
+                             select a).SingleOrDefault();
                 if (admin != null)
                 {
                     if (eskiParola == admin.Parola)

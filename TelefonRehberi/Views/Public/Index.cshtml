@@ -5,6 +5,11 @@
 }
 
 <h2>Public Index</h2>
+<div class="input-group">
+    <input id="ara" type="text" class="form-control" placeholder="Recipient's username" aria-describedby="basic-addon2">
+    <i class="glyphicon glyphicon glyphicon-search form-control-feedback"></i>
+</div>
+
 
 <table id="ortala" class="table table-hover ">
     <thead>
@@ -15,7 +20,7 @@
             <th>Telefon</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="tableBody">
         @foreach (var calisan in Model.calisanlar)
         {
             <tr >
@@ -93,4 +98,8 @@
             $("#yonetici").val(cevap.Yonetici);
         });
     }
+
+    $(document).ready(function () {
+        $("#ara").keypress
+    });
 </script>
