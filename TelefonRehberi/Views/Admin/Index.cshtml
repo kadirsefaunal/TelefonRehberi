@@ -4,8 +4,13 @@
     Layout = "~/Views/Admin/_LayoutAdmin.cshtml";
 }
 
-<h2>Admin Index</h2>
-@Html.ActionLink("Çalışan Ekle", "CalisanEkle", "Admin", new { @class = "btn btn-primary" })
+<div class="row">
+    <h2 class="col-md-9 col-sm-9" style="margin-top: -0.1em">Admin Anasayfa</h2>
+    @Html.ActionLink("Çalışan Ekle", "CalisanEkle", "Admin", new { @class = "btn btn-primary col-md-3 col-sm-3" })
+</div>
+
+<br /><br />
+
 <table id="ortala" class="table table-hover ">
     <thead>
         <tr>
@@ -22,10 +27,15 @@
                 <td>@calisan.ID</td>
                 <td>@calisan.CalisanAd</td>
                 <td>@calisan.CalisanSoyad</td>
-                <td>@calisan.Telefon</td>
-                <td>@Html.ActionLink("Düzenle", "CalisanDuzenle", "Admin", new { calisanID = calisan.ID }, new { @class = "btn btn-default" })</td>
-                <td>@Html.ActionLink("Sil", "CalisanSil", "Admin", new { calisanID = calisan.ID }, new { @class = "btn btn-default" })</td>
+                <td id="tel">@calisan.Telefon</td>
+                <td>@Html.ActionLink("Düzenle", "CalisanDuzenle", "Admin", new { calisanID = calisan.ID }, new { @class = "btn btn-default pull-right" }) @Html.ActionLink("Sil", "CalisanSil", "Admin", new { calisanID = calisan.ID }, new { @class = "btn btn-default pull-right" })</td>
             </tr>
         }
     </tbody>
 </table>
+
+<script>
+    $(document).ready(function () {
+        $("td#tel").mask("(000) 000-0000");
+    });
+</script>
