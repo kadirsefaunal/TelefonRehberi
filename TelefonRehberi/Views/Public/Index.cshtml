@@ -7,6 +7,7 @@
 <h2>Çalışan Listesi</h2>
 <br /><br />
 
+<!-- Çalışan Listesi -->
 <table id="ortala" class="table table-hover ">
     <thead>
         <tr>
@@ -29,6 +30,7 @@
         }
     </tbody>
 </table>
+<!-- Çalışan Listesi Bitiş -->
 
 <!-- Detay Modal -->
 <div class="modal fade" id="detay" tabindex="-1" role="dialog">
@@ -37,39 +39,8 @@
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">Çalışan Detay</h4>
             </div>
-            <div class="modal-body">
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label for="ad" class="col-sm-2 control-label">Ad: </label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="ad" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="soyad" class="col-sm-2 control-label">Soyad: </label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="soyad" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="telefon" class="col-sm-2 control-label" data-mask="(000) 000-0000">Telefon: </label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="telefon" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="departman" class="col-sm-2 control-label">Departman: </label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="departman" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="yonetici" class="col-sm-2 control-label">Yönetici: </label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="yonetici" readonly>
-                        </div>
-                    </div>
-                </form>
+            <div class="modal-body" id="icerik">
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
@@ -81,21 +52,17 @@
 
 <script>
     function DetayGoster(calisanID) {
-        $("#detay").modal("show");
         var veri = {
             calisanID: calisanID
         };
+
         $.post("/Public/CalisanDetay", veri, function (cevap) {
-            $("#ad").val(cevap.CalisanAd);
-            $("#soyad").val(cevap.CalisanSoyad);
-            $(":input#telefon").val(cevap.Telefon).mask("(000) 000-0000");
-            $("#departman").val(cevap.Departman);
-            $("#yonetici").val(cevap.Yonetici);
+            $("#icerik").html(cevap);
+            $("#detay").modal("show");
         });
     }
 
     $(document).ready(function () {
         $("td#tel").mask("(000) 000-0000");
-        
     });
 </script>

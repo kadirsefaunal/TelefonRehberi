@@ -172,6 +172,7 @@
     <Content Include="Views\Admin\Departmanlar.cshtml" />
     <Content Include="Views\Admin\DepartmanSil.cshtml" />
     <Content Include="Views\Admin\DepartmanDuzenle.cshtml" />
+    <Content Include="Views\Public\_CalisanDetay.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

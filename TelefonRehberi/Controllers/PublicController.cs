@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -21,12 +20,24 @@ namespace TelefonRehberi.Controllers
             return View(vm);
         }
 
-        public JsonResult CalisanDetay(int calisanID)
+        /// <summary>
+        /// Çalışanın detay bilgisini gösterir.
+        /// </summary>
+        /// <param name="calisanID">Detayı istenen çalışanın ID'si</param>
+        /// <returns>Partialview</returns>
+        [HttpPost]
+        public ActionResult CalisanDetay(int calisanID)
         {
             Calisan mapCalisan = IslemPublic.CalisanDetay(calisanID);
-            return Json(mapCalisan);
+            return PartialView("_CalisanDetay", mapCalisan);
         }
         
+        /// <summary>
+        /// Adminin sisteme giriş yapmasını sağlar
+        /// </summary>
+        /// <param name="kullaniciAdi"></param>
+        /// <param name="parola"></param>
+        /// <returns>Giriş işleminin sonucu</returns>
         public JsonResult GirisYap(string kullaniciAdi, string parola)
         {
             try
@@ -60,6 +71,10 @@ namespace TelefonRehberi.Controllers
             }
         }
 
+        /// <summary>
+        /// Adminin sistemden çıkmasını sağlar.
+        /// </summary>
+        /// <returns></returns>
         public JsonResult CikisYap()
         {
             try
