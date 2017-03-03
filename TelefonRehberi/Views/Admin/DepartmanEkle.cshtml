@@ -44,7 +44,7 @@
             };
 
             $.post("/Admin/DepartmanEklee", { departman: departman }, function (cevap) {
-                if (cevap == "Departman güncelleme başarılı.") {
+                if (cevap == "Departman ekleme işlemi başarılı.") {
                     window.location = "../../Admin/Departmanlar";
                 }
                 else {

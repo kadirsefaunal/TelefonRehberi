@@ -51,17 +51,20 @@
         <label for="yonetici" class="col-sm-2 control-label">Yönetici: </label>
         <div class="col-sm-9">
             <select id="yonetici" class="form-control">
-                <option>seçiniz</option>
+                <option>Seçiniz</option>
                 @foreach (var yonetici in Model.calisanlar)
                 {
-                    string adSoyad = yonetici.CalisanAd + " " + yonetici.CalisanSoyad;
-                    if (yonetici.ID == Model.calisan.YoneticiID)
+                    if (yonetici.ID != Model.mapCalisan.ID)//Çalışanın kendisini gösterme
                     {
-                        <option selected value="@yonetici.ID">@adSoyad</option>
-                    }
-                    else
-                    {
-                        <option value="@yonetici.ID">@adSoyad</option>
+                        string adSoyad = yonetici.CalisanAd + " " + yonetici.CalisanSoyad;
+                        if (yonetici.ID == Model.calisan.YoneticiID)
+                        {
+                            <option selected value="@yonetici.ID">@adSoyad</option>
+                        }
+                        else
+                        {
+                            <option value="@yonetici.ID">@adSoyad</option>
+                        }
                     }
                 }
             </select>
@@ -87,7 +90,7 @@
                 ID: id,
                 CalisanAd: $("#ad").val(),
                 CalisanSoyad: $("#soyad").val(),
-                Telefon: $("#telefon").val(),
+                Telefon: $("#telefon").unmask().val(),
                 DepartmanID: $('#departman').val(),
                 YoneticiID: $("#yonetici").val()
             };
@@ -97,7 +100,7 @@
                     window.location = "../../Admin/Index";
                 }
                 else {
-                    $("#hata").html("<p>Boş alan bırakma!</p>").show();
+                    $("#hata").html("<p>" + cevap + "</p>").show();
                 }
             });
         }
