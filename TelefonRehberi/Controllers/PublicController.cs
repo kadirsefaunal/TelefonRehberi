@@ -26,7 +26,7 @@ namespace TelefonRehberi.Controllers
             Calisan mapCalisan = IslemPublic.CalisanDetay(calisanID);
             return Json(mapCalisan);
         }
-
+        
         public JsonResult GirisYap(string kullaniciAdi, string parola)
         {
             try

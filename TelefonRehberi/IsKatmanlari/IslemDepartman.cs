@@ -47,10 +47,17 @@ namespace TelefonRehberi.IsKatmanlari
                                      where d.ID == departmanID
                                      select d).SingleOrDefault();
 
-                    db.Departmanlar.Remove(departman);
-                    db.SaveChanges();
+                    if (departman.Calisanlar.Count() == 0)
+                    {
+                        db.Departmanlar.Remove(departman);
+                        db.SaveChanges();
 
-                    return "Departman silme başarılı.";
+                        return "Departman silme başarılı.";
+                    }
+                    else
+                    {
+                        return "Bu departmanı silemezsiniz! Bu departmanda çalışanlar var";
+                    }
                 }
             }
             catch (Exception ex)

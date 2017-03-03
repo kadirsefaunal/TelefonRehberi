@@ -14,6 +14,7 @@
     <!--JS başlangıç-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.min.js"></script>
     <!--JS bitiş-->
 
 </head>
@@ -74,7 +75,8 @@
                     <h4 class="modal-title" id="myModalLabel">Giriş Yapın</h4>
                 </div>
                 <div class="modal-body container">
-                    <div class="col-md-4 col-md-offset-1">
+                    <div class="col-sm-8 col-sm-offset-1 col-md-4 col-md-offset-1">
+                        <div id="hata" class="alert alert-danger collapse" role="alert">Giriş başarısız!</div>
                         <div class="form-group">
                             <input id="kullaniciAdi" class="form-control" placeholder="Kullanıcı Adı" name="Kullanıcı Adı" type="text">
                         </div>
@@ -105,15 +107,18 @@
                 };
 
                 $.post("/Public/GirisYap", veri, function (cevap) {
-                    console.log(cevap);
-                    window.location = "../../Admin/Index";
+                    if (cevap == "Giriş başarılı.") {
+                        window.location = "../../Admin/Index";
+                    }
+                    else {
+                        $("#hata").show();
+                    }
                 });
             }
         }
 
         function Cikis() {
             $.post("/Public/CikisYap", function (cevap) {
-                console.log(cevap);
                 window.location.reload(true);
             });
         }
