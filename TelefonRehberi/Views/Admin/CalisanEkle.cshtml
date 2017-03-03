@@ -5,31 +5,33 @@
 }
 
 <h2>CalisanEkle</h2>
+<br /><br />
 
 <form class="form-horizontal">
+    <div id="hata" class="alert alert-danger collapse col-sm-12" role="alert"></div>
     <div class="form-group">
         <label for="calisanAd" class="col-sm-2 control-label">*Çalışan Adı: </label>
         <div class="col-sm-9">
-            <input id="calisanAd" type="text" class="form-control" placeholder="Text input">
+            <input id="calisanAd" type="text" class="form-control" placeholder="Çalışan Ad">
         </div>
     </div>
     <div class="form-group">
         <label for="calisanSoyad" class="col-sm-2 control-label">*Çalışan Soyadı: </label>
         <div class="col-sm-9">
-            <input id="calisanSoyad" type="text" class="form-control" placeholder="Text input">
+            <input id="calisanSoyad" type="text" class="form-control" placeholder="Çalışan Soyad">
         </div>
     </div>
     <div class="form-group">
         <label for="numara" class="col-sm-2 control-label">*Telefon: </label>
         <div class="col-sm-9">
-            <input id="numara" type="text" class="form-control" placeholder="Text input">
+            <input id="numara" type="text" class="form-control" placeholder="Telefon Numarası">
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">Departman: </label>
         <div class="col-sm-9">
             <select id="departman" class="form-control">
-                <option>seçiniz</option>
+                <option>-Seçiniz-</option>
                 @foreach (var departman in Model.departmanlar)
                 {
                     <option value="@departman.ID">@departman.DepartmanAdi</option>
@@ -41,7 +43,7 @@
         <label class="col-sm-2 control-label">Yönetici: </label>
         <div class="col-sm-9">
             <select id="yonetici" class="form-control">
-                <option>seçiniz</option>
+                <option>-Seçiniz-</option>
                 @foreach (var calisan in Model.calisanlar)
                 {
                     string adSoyad = calisan.CalisanAd + " " + calisan.CalisanSoyad;
@@ -65,7 +67,7 @@
     {
         var kontrol = true;
         if ($.trim($("#calisanAd").val()) == "" || $.trim($("#calisanSoyad").val()) == "" || $.trim($("#numara").val()) == "") {
-            console.log("Boş alan bırakma!");
+            $("#hata").html("<p>Boş alan bırakma!</p>").show();
             kontrol = false;
         }
 
@@ -73,14 +75,18 @@
             var calisan = {
                 CalisanAd: $("#calisanAd").val(),
                 CalisanSoyad: $("#calisanSoyad").val(),
-                Telefon: $("#numara").val(),
+                Telefon: $("#numara").unmask().val(),
                 DepartmanID: $('#departman').val(),
                 YoneticiID: $("#yonetici").val()
             };
-            console.log(calisan);
+
             $.post("/Admin/CEkle", { calisan: calisan }, function (cevap) {
-                console.log(cevap);
+                window.location = "../../Admin/Index";
             });
         }
     }
+
+    $(document).ready(function () {
+        $("#numara").mask("(000) 000-0000");
+    });
 </script>
