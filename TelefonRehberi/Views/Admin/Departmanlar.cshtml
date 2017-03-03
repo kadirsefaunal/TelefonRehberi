@@ -4,9 +4,12 @@
     Layout = "~/Views/Admin/_LayoutAdmin.cshtml";
 }
 
-<h2>Departmanlar</h2>
+<div class="row">
+    <h2 class="col-md-9 col-sm-9" style="margin-top: -0.1em">Departmanlar</h2>
+    @Html.ActionLink("Departman Ekle", "DepartmanEkle", "Admin", new { @class = "btn btn-primary col-md-3 col-sm-3" })
+</div>
+<br /><br />
 
-@Html.ActionLink("Departman Ekle", "DepartmanEkle", "Admin", new { @class = "btn btn-primary" })
 <table id="ortala" class="table table-hover ">
     <thead>
         <tr>
@@ -17,12 +20,12 @@
     </thead>
     <tbody>
         @foreach (var departman in Model.departmanlar)
-        {
+            {
             <tr>
                 <td>@departman.ID</td>
                 <td>@departman.DepartmanAdi</td>
                 <td>@departman.Aciklama</td>
-                <td>@Html.ActionLink("Düzenle", "DepartmanDuzenle", "Admin", new { departmanID = departman.ID }, new { @class = "btn btn-default" }) @Html.ActionLink("Sil", "DepartmanSil", "Admin", new { departmanID = departman.ID }, new { @class = "btn btn-default" })</td>
+                <td>@Html.ActionLink("Düzenle", "DepartmanDuzenle", "Admin", new { departmanID = departman.ID }, new { @class = "btn btn-default pull-right" }) @Html.ActionLink("Sil", "DepartmanSil", "Admin", new { departmanID = departman.ID }, new { @class = "btn btn-default pull-right" })</td>
             </tr>
         }
     </tbody>
